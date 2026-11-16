@@ -2169,7 +2169,7 @@ async function recuperarGuerraPerdida(dadosAtuais) {
     await processarDadosGuerra({ ...foto, state: "warEnded" });
 }
 
-app.post("/sincronizar-guerra", async (request, response) => {
+app.post("/sincronizar-guerra", autenticarAdmin, async (request, response) => {
     try {
 
         if (!process.env.CLASH_API_KEY) {
@@ -2238,7 +2238,7 @@ setTimeout(() => registrarEvolucaoDiaria().catch(() => {}), 2 * 60 * 1000);
 cron.schedule("*/15 * * * *", async () => {
     console.log("Iniciando varredura automatizada na API da Supercell...");
     try {
-        await axios.post(`http://localhost:3333/sincronizar-guerra`);
+        await axios.post(`http://localhost:3333/sincronizar-guerra`, {}, { headers: { 'x-admin-key': process.env.ADMIN_KEY } });
         console.log("Varredura automatizada concluída com sucesso.");
     } catch (err) {
         console.error("Aviso da varredura automatizada:", err.response?.data?.mensagem || err.message);
