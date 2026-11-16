@@ -1,0 +1,60 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Membro {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  tag             String   @unique
+  nome            String
+  cv              Int
+  status          String
+  totalEstrelas   Int      @default(0)
+  totalDestruicao Int      @default(0)
+  guerras         Int      @default(0)
+  guerrasIds      String[]
+}
+
+model AtaqueAnunciado {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  idAtaque  String   @unique
+  createdAt DateTime @default(now())
+}
+
+model AtaqueBagreAnunciado {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  idAtaque  String   @unique
+  createdAt DateTime @default(now())
+}
+
+model AtaqueRegistrado {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  idAtaque    String   @unique
+  tagJogador  String
+  warId       String
+  estrelas    Int
+  destruicao  Float
+  createdAt   DateTime @default(now())
+}
+
+model Temporada {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  mes       String   @unique
+  snapshot  Json
+  criadoEm  DateTime @default(now())
+}
+
+model ConvocacaoCWL {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  cla          String   @unique
+  tamanho      Int      @default(15)
+  membros      String[]
+  atualizadoEm DateTime @default(now())
+}
