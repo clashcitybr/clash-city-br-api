@@ -6,9 +6,20 @@ node_modules/
 .env.*
 !.env.example
 
-# WhatsApp Web session (never commit)
+# WhatsApp session (never commit)
+wwebjs_auth_baileys/
 .wwebjs_auth/
 .wwebjs_cache/
+
+# Runtime data files (generated on the server)
+push-subscriptions.json
+defesas.json
+guerras-detalhe.json
+uso.json
+evolucao.json
+ataques.json
+ultima-guerra.json
+*.tmp
 
 # Prisma generated client
 /generated/
